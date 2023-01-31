@@ -299,23 +299,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -363,8 +357,85 @@ display: none;
 </div>
 
 
-<div id="hoja-de-trabajo-1" class="section level2">
-<h2>Hoja de trabajo 1</h2>
+<div id="hoja-de-trabajo-1-análisis-exploratorio" class="section level2">
+<h2>Hoja de Trabajo 1: Análisis exploratorio</h2>
+<div id="ejercicio-1" class="section level3">
+<h3>Ejercicio 1</h3>
+<p>A continuación se presenta un resumen de los datos de la base de
+datos <em>Movies</em></p>
+<pre class="r"><code>summary(movies)</code></pre>
+<pre><code>##        id             budget             genres            homePage        
+##  Min.   :     5   Min.   :        0   Length:10000       Length:10000      
+##  1st Qu.: 12286   1st Qu.:        0   Class :character   Class :character  
+##  Median :152558   Median :   500000   Mode  :character   Mode  :character  
+##  Mean   :249877   Mean   : 18551632                                        
+##  3rd Qu.:452022   3rd Qu.: 20000000                                        
+##  Max.   :922260   Max.   :380000000                                        
+##  productionCompany  productionCompanyCountry productionCountry 
+##  Length:10000       Length:10000             Length:10000      
+##  Class :character   Class :character         Class :character  
+##  Mode  :character   Mode  :character         Mode  :character  
+##                                                                
+##                                                                
+##                                                                
+##     revenue             runtime        video           director        
+##  Min.   :0.000e+00   Min.   :  0.0   Mode :logical   Length:10000      
+##  1st Qu.:0.000e+00   1st Qu.: 90.0   FALSE:9430      Class :character  
+##  Median :1.631e+05   Median :100.0   TRUE :84        Mode  :character  
+##  Mean   :5.674e+07   Mean   :100.3   NA&#39;s :486                         
+##  3rd Qu.:4.480e+07   3rd Qu.:113.0                                     
+##  Max.   :2.847e+09   Max.   :750.0                                     
+##     actors          actorsPopularity   actorsCharacter    originalTitle     
+##  Length:10000       Length:10000       Length:10000       Length:10000      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##     title           originalLanguage     popularity        releaseDate       
+##  Length:10000       Length:10000       Min.   :    4.258   Length:10000      
+##  Class :character   Class :character   1st Qu.:   14.578   Class :character  
+##  Mode  :character   Mode  :character   Median :   21.906   Mode  :character  
+##                                        Mean   :   51.394                     
+##                                        3rd Qu.:   40.654                     
+##                                        Max.   :11474.647                     
+##     voteAvg         voteCount      genresAmount    productionCoAmount
+##  Min.   : 1.300   Min.   :    1   Min.   : 0.000   Min.   : 0.000    
+##  1st Qu.: 5.900   1st Qu.:  120   1st Qu.: 2.000   1st Qu.: 2.000    
+##  Median : 6.500   Median :  415   Median : 3.000   Median : 3.000    
+##  Mean   : 6.483   Mean   : 1342   Mean   : 2.596   Mean   : 3.171    
+##  3rd Qu.: 7.200   3rd Qu.: 1316   3rd Qu.: 3.000   3rd Qu.: 4.000    
+##  Max.   :10.000   Max.   :30788   Max.   :16.000   Max.   :89.000    
+##  productionCountriesAmount  actorsAmount    castWomenAmount   
+##  Min.   :  0.000           Min.   :     0   Length:10000      
+##  1st Qu.:  1.000           1st Qu.:    13   Class :character  
+##  Median :  1.000           Median :    21   Mode  :character  
+##  Mean   :  1.751           Mean   :  2148                     
+##  3rd Qu.:  2.000           3rd Qu.:    36                     
+##  Max.   :155.000           Max.   :919590                     
+##  castMenAmount     
+##  Length:10000      
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+## </code></pre>
+</div>
+<div id="ejercicio-2" class="section level3">
+<h3>Ejercicio 2</h3>
+<p>A continuación se presentan las variables, según su
+clasificación:</p>
+<ul>
+<li>Variables Cuantitativas:
+<ul>
+<li>Discretas:</li>
+<li>Continuas:
+<ul>
+<li>Budget</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 </div>
 
 

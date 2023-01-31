@@ -5,5 +5,50 @@ date: "2023-01-27"
 output: html_document
 ---
 
-## Hoja de trabajo 1
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 
+library(xtable)
+movies <- read.csv("movies.csv")
+```
+
+## Hoja de Trabajo 1: Análisis exploratorio
+
+### Ejercicio 1
+
+A continuación se presenta un resumen de los datos de la base de datos *Movies*
+
+```{r}
+summary(movies)
+```
+
+### Ejercicio 2
+```{r include=FALSE}
+str(movies)
+```
+A continuación se presentan las variables, según su clasificación:
+
+* Variables Cuantitativas:
+  + Discretas:
+    * runtime   
+  + Continuas:
+    * budget
+    * revenue
+
+* Variables Cualitativas:
+  + Nominal:
+    * genres
+    * homePage
+    * productionCompany
+    * productionCompanyCountry
+    * productionCountry
+    * video
+    * director
+    * actors
+    * actorsCharacter
+    * originalTitle 
+    * title
+    * originalLanguage
+  + Ordinal:
+    * actorsPopularity
+    
