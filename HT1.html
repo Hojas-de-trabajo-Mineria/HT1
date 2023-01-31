@@ -428,13 +428,95 @@ clasificación:</p>
 <ul>
 <li>Variables Cuantitativas:
 <ul>
-<li>Discretas:</li>
+<li>Discretas:
+<ul>
+<li>runtime</li>
+<li>voteAvg</li>
+<li>voteCount</li>
+<li>genresAmount</li>
+<li>productionCoAmoun</li>
+<li>productionCountriesAmount</li>
+<li>actorsAmount</li>
+<li>castWomenAmount</li>
+<li>castMenAmount</li>
+</ul></li>
 <li>Continuas:
 <ul>
-<li>Budget</li>
+<li>budget</li>
+<li>revenue</li>
+</ul></li>
+</ul></li>
+<li>Variables Cualitativas:
+<ul>
+<li>Nominal:
+<ul>
+<li>genres</li>
+<li>homePage</li>
+<li>productionCompany</li>
+<li>productionCompanyCountry</li>
+<li>productionCountry</li>
+<li>video</li>
+<li>director</li>
+<li>actors</li>
+<li>actorsCharacter</li>
+<li>originalTitle</li>
+<li>title</li>
+<li>originalLanguage</li>
+</ul></li>
+<li>Ordinal:
+<ul>
+<li>actorsPopularity</li>
+<li>popularity</li>
+<li>releaseDate</li>
 </ul></li>
 </ul></li>
 </ul>
+</div>
+<div id="ejercicio-4" class="section level3">
+<h3>Ejercicio 4</h3>
+<div id="cuáles-son-las-10-películas-que-contaron-con-más-presupuesto" class="section level4">
+<h4>4.1 ¿Cuáles son las 10 películas que contaron con más
+presupuesto?</h4>
+<pre class="r"><code>moreBudget &lt;- movies[order(movies$budget,decreasing = TRUE), ]
+moreBudget[1:10,15]</code></pre>
+<pre><code>##  [1] &quot;Pirates of the Caribbean: On Stranger Tides&quot;
+##  [2] &quot;Avengers: Age of Ultron&quot;                    
+##  [3] &quot;Avengers: Endgame&quot;                          
+##  [4] &quot;Pirates of the Caribbean: At World&#39;s End&quot;   
+##  [5] &quot;Justice League&quot;                             
+##  [6] &quot;Avengers: Infinity War&quot;                     
+##  [7] &quot;Superman Returns&quot;                           
+##  [8] &quot;Tangled&quot;                                    
+##  [9] &quot;The Lion King&quot;                              
+## [10] &quot;Spider-Man 3&quot;</code></pre>
+</div>
+<div id="cuáles-son-las-10-películas-que-más-ingresos-tuvieron" class="section level4">
+<h4>4.2 ¿Cuáles son las 10 películas que más ingresos tuvieron?</h4>
+<pre class="r"><code>moreRevenue &lt;- movies[order(movies$revenue,decreasing = TRUE), ]
+moreRevenue[1:10,15]</code></pre>
+<pre><code>##  [1] &quot;Avatar&quot;                       &quot;Avengers: Endgame&quot;           
+##  [3] &quot;Titanic&quot;                      &quot;Star Wars: The Force Awakens&quot;
+##  [5] &quot;Avengers: Infinity War&quot;       &quot;Jurassic World&quot;              
+##  [7] &quot;The Lion King&quot;                &quot;Spider-Man: No Way Home&quot;     
+##  [9] &quot;The Avengers&quot;                 &quot;Furious 7&quot;</code></pre>
+</div>
+<div id="cuál-es-la-película-que-más-votos-tuvo" class="section level4">
+<h4>4.3 ¿Cuál es la película que más votos tuvo?</h4>
+<pre class="r"><code>moreVotes &lt;- movies[order(movies$voteCount,decreasing = TRUE), ]
+moreVotes[1:10,15]</code></pre>
+<pre><code>##  [1] &quot;Inception&quot;               &quot;Interstellar&quot;           
+##  [3] &quot;The Dark Knight&quot;         &quot;The Avengers&quot;           
+##  [5] &quot;Deadpool&quot;                &quot;Avatar&quot;                 
+##  [7] &quot;Guardians of the Galaxy&quot; &quot;Avengers: Infinity War&quot; 
+##  [9] &quot;Fight Club&quot;              &quot;Pulp Fiction&quot;</code></pre>
+</div>
+<div id="cuál-es-la-peor-película-de-acuerdo-a-los-votos-de-todos-los-usuarios" class="section level4">
+<h4>4.4 ¿Cuál es la peor película de acuerdo a los votos de todos los
+usuarios?</h4>
+<pre class="r"><code>lessVote &lt;- movies[order(movies$voteAvg,decreasing = FALSE), ]
+lessVote[1,15]</code></pre>
+<pre><code>## [1] &quot;&lt;U+5287&gt;&lt;U+5834&gt;&lt;U+7248&gt; &lt;U+62B1&gt;&lt;U+304B&gt;&lt;U+308C&gt;&lt;U+305F&gt;&lt;U+3044&gt;&lt;U+7537&gt;1&lt;U+4F4D&gt;&lt;U+306B&gt;&lt;U+8105&gt;&lt;U+3055&gt;&lt;U+308C&gt;&lt;U+3066&gt;&lt;U+3044&gt;&lt;U+307E&gt;&lt;U+3059&gt;&lt;U+3002&gt;~&lt;U+30B9&gt;&lt;U+30DA&gt;&lt;U+30A4&gt;&lt;U+30F3&gt;&lt;U+7DE8&gt;~&quot;</code></pre>
+</div>
 </div>
 </div>
 

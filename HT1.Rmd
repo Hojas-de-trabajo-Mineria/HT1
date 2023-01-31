@@ -30,7 +30,15 @@ A continuación se presentan las variables, según su clasificación:
 
 * Variables Cuantitativas:
   + Discretas:
-    * runtime   
+    * runtime
+    * voteAvg
+    * voteCount 
+    * genresAmount
+    * productionCoAmoun
+    * productionCountriesAmount
+    * actorsAmount
+    * castWomenAmount
+    * castMenAmount
   + Continuas:
     * budget
     * revenue
@@ -51,4 +59,37 @@ A continuación se presentan las variables, según su clasificación:
     * originalLanguage
   + Ordinal:
     * actorsPopularity
-    
+    * popularity
+    * releaseDate
+
+
+### Ejercicio 4
+
+#### 4.1 ¿Cuáles son las 10 películas que contaron con más presupuesto? 
+
+
+```{r}
+moreBudget <- movies[order(movies$budget,decreasing = TRUE), ]
+moreBudget[1:10,15]
+```
+
+#### 4.2  ¿Cuáles son las 10 películas que más ingresos tuvieron? 
+
+```{r}
+moreRevenue <- movies[order(movies$revenue,decreasing = TRUE), ]
+moreRevenue[1:10,15]
+```
+
+#### 4.3 ¿Cuál es la película que más votos tuvo?
+
+```{r}
+moreVotes <- movies[order(movies$voteCount,decreasing = TRUE), ]
+moreVotes[1:10,15]
+```
+
+#### 4.4 ¿Cuál es la peor película de acuerdo a los votos de todos los usuarios? 
+
+```{r}
+lessVote <- movies[order(movies$voteAvg,decreasing = FALSE), ]
+lessVote[1,15]
+```
