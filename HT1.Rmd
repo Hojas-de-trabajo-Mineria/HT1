@@ -1,8 +1,10 @@
 ---
 title: "HT1"
 author: "Joshua Chicoj"
-date: "2023-01-27"
-output: html_document
+date: '2023-01-27'
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -93,3 +95,168 @@ moreVotes[1:10,15]
 lessVote <- movies[order(movies$voteAvg,decreasing = FALSE), ]
 lessVote[1,15]
 ```
+
+
+#### 4.10 ¿Quiénes son los directores que hicieron las 20 películas mejor calificadas? 
+
+```{r}
+datos <- read.csv("movies.csv")
+puntaje<- datos$voteAvg
+directores <- datos$director
+ordenPuntaje<- order(puntaje,decreasing = TRUE)
+mejores <- list()
+for (i in 1:20){
+  actual <- directores[ordenPuntaje[i]]
+  if (actual==""){
+    mejores[i] <- "desconocido"
+  }else{
+    mejores[i]<- actual
+  }
+}
+mejores
+```
+
+#### 4.11 ¿Cómo  se  correlacionan  los  presupuestos  con  los  ingresos?  ¿Los  altos presupuestos significan altos ingresos? Haga los gráficos que necesite, histograma, diagrama de dispersión 
+
+```{r}
+presupuesto<-datos$budget
+ingreso <- datos$revenue
+presupuestoVsIngreso <- data.frame(presupuesto,ingreso)
+library(psych)
+pairs.panels(presupuestoVsIngreso)
+```
+
+podemos ver que si hay una correlacion, no fuerte, pero no despreciable, subir el presupuesto de una pelicula si deberia aumentar sus ingresos, aunque no nesesariamente por mucho.  
+
+#### 4.12 ¿Se asocian ciertos meses de lanzamiento con mejores ingresos? 
+
+```{r}
+fecha<-datos$releaseDate
+mes <- 0
+for (i in 1:length(fecha)){
+  contador <- 0
+  esteMes <- ""
+  for (j in 1:nchar(fecha[i])){
+    caracter <-substr(fecha[i],j,j)
+    if (caracter=="-"){
+      contador<-contador+1
+    }else{
+      if(contador==1){
+        esteMes<- paste(esteMes,caracter)
+      }
+    }
+  }
+  mes[i]<-switch(esteMes,
+                 " 0 1"=1,
+                 " 0 2"=2,
+                 " 0 3"=3,
+                 " 0 4"=4,
+                 " 0 5"=5,
+                 " 0 6"=6,
+                 " 0 7"=7,
+                 " 0 8"=8,
+                 " 0 9"=9,
+                 " 1 0"=10,
+                 " 1 1"=11,
+                 " 1 2"=12,
+                 )
+}
+ordenIngreso<- order(ingreso,decreasing = TRUE)
+mejoresMeses <- 0
+for(i in 1:12){
+  mejoresMeses[i]<- 0
+}
+for (i in 1:(length(ordenIngreso)*0.1)){
+  elMejorMes <- mes[ordenIngreso[i]]
+  mejoresMeses[elMejorMes]<- mejoresMeses[elMejorMes]+1
+}
+barplot(mejoresMeses,
+     xlab = "mes", ylab = "cantidad de peliculas")
+for (i in 1:12){
+  mejoresMeses[i]<- mejoresMeses[i]/(length(ordenIngreso)*0.1)
+}
+OrdenMeses<-order(mejoresMeses,decreasing = TRUE)
+meses<-c("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre")
+```
+del 10% de las peliculas con mejores ingresos, el `r mejoresMeses[OrdenMeses[1]]*100`% fue estrenada en `r meses[OrdenMeses[1]]`, en cambio solo el `r mejoresMeses[OrdenMeses[length(OrdenMeses)]]*100`% fue estrenada en `r meses[OrdenMeses[length(OrdenMeses)]]`, por lo cual si podriamos asociar algunos meses de lanzamiento con mejores ingresos
+
+#### 4.13 ¿En qué meses se han visto los lanzamientos con mejores ingresos?¿cuantas películas, en promedio, se han lanzado por mes?
+
+```{r}
+peliculasPorMes<-0
+for (i in 1:12){
+  peliculasPorMes[i]<-0
+}
+for (i in 1:(length(ordenIngreso))){
+  peliculasPorMes[mes[i]]<- peliculasPorMes[mes[i]]+1
+}
+```
+los 2 mejores ingresos en un lanzamiento se han visto en los meses de `r meses[mes[ordenIngreso[1]]]` y `r meses[mes[ordenIngreso[2]]]`. Ademas se lanzan en promedio `r mean(peliculasPorMes)` peliculas al mes
+
+#### 4.14 ¿Cómo se correlacionan las calificaciones con el éxito comercial? 
+
+```{r}
+exito<-ingreso-presupuesto
+exitoVsPuntaje <- data.frame(puntaje,exito)
+library(psych)
+pairs.panels(exitoVsPuntaje)
+```
+
+como podemos ver, la corelacion entre los datos es muy baja, aunque lo que si es que las peliculas mas exitosas tuvieron buena puntuacion y las que tuvieron peor puntuacion fueron de las peores evaluadas  
+
+#### 4.15 ¿A qué género principal pertenecen las películas más largas? 
+
+```{r}
+genero<-datos$genres
+for(i in 1:length(genero)){
+  generoActual<-""
+  verificador<-0
+  for (j in 1:nchar(genero[i])){
+    caracter <-substr(genero[i],j,j)
+    if(caracter=="|"){
+      verificador<-1
+    }
+    if(verificador==0){
+      generoActual<-paste(generoActual,caracter)
+    }
+  }
+  genero[i]<-generoActual
+}
+largo<-datos$runtime
+ordenLargo<-order(largo,decreasing = TRUE)
+generos <- genero[ordenLargo[1]]
+MejoresGeneros <-1
+laMasLarga<-genero[ordenLargo[1]]
+contador<-1
+verificador2<-0
+for (i in 2:(length(ordenLargo)*0.1)){
+  if(verificador2==0){
+    if(genero[ordenLargo[i]]==laMasLarga){
+      contador<-contador+1
+    }else{
+      verificador2<-1
+    }
+  }
+  nuevoGenero<-genero[ordenLargo[i]]
+  verificador<-0
+  numero<-0
+  for(j in 1:length(generos)){
+    if(generos[j]==nuevoGenero){
+      verificador<-1
+      numero<-j
+    }
+  }
+  if(verificador==1){
+    MejoresGeneros[numero]=MejoresGeneros[numero]+1
+  }else{
+    MejoresGeneros[length(generos)+1]<- 1
+    generos[length(generos)+1]<-nuevoGenero
+  }
+}
+ordenMasLargas<-order(MejoresGeneros,decreasing = TRUE)
+for (i in 2:(length(MejoresGeneros))){
+  MejoresGeneros[i]<-MejoresGeneros[i]/(length(ordenLargo)*0.1)
+}
+```
+
+del 10% de las peliculas mas largas, el `r MejoresGeneros[ordenMasLargas[1]]*100`% son de genero principal `r generos[ordenMasLargas[1]]` y el `r MejoresGeneros[ordenMasLargas[2]]*100`% son `r generos[ordenMasLargas[2]]` aunque las `r contador` peliculas mas largas son de genero `r genero[ordenLargo[1]]` 
