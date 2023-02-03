@@ -327,9 +327,11 @@ generos = as.numeric(genres$freq)
 names(generos) = genres$genre
 barplot(generos)
 ```
-El género principal de las 20 películas más recientes es `r generos[which.max(generos$freq), 1]`.
+El género principal de las 20 películas más recientes es `r genres[which.max(genres$freq), 1]`.
 
 ```{r}
+genre = c('Action')
+freq = c(1)
 genres <- data.frame(genre, freq)
 
 for (i in 1:length(movies$genres)) {
@@ -349,7 +351,7 @@ generos = as.numeric(genres$freq)
 names(generos) = genres$genre
 barplot(generos)
 ```
-El género que predomina en el conjunto de datos es `r generos[which.max(generos$freq), 1]`.
+El género que predomina en el conjunto de datos es `r genres[which.max(genres$freq), 1]`.
 
 #### 4.7 ¿Las películas de qué genero principal obtuvieron mayores ganancias?
 ```{r}
@@ -547,3 +549,21 @@ for (i in 2:(length(MejoresGeneros))){
 ```
 
 del 10% de las peliculas mas largas, el `r MejoresGeneros[ordenMasLargas[1]]*100`% son de genero principal `r generos[ordenMasLargas[1]]` y el `r MejoresGeneros[ordenMasLargas[2]]*100`% son `r generos[ordenMasLargas[2]]` aunque las `r contador` peliculas mas largas son de genero `r genero[ordenLargo[1]]` 
+
+## Puntos Extra
+
+### ¿Hay correlación entre la duración de la película y la cantidad de ganancias?
+```{r}
+plot(movies$runtime,movies$revenue)
+
+```
+
+Si vemos, la mayoría de películas tienen la misma duración, por lo que en esta franja se encuantran también las que tienen mayor ganancia. Consiguientemente podemos establecer que no podemos determinar que haya alguna correlación entre la duración de la película y sus ingresos
+### ¿Hay correlación entre el presupuesto y la cantidad de mujeres contratadas?
+
+```{r}
+
+plot(movies2$budget,movies2$MenPercentage)
+
+cor.test(movies2$budget, movies2$MenPercentage, method = 'spearman')
+```
