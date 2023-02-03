@@ -160,28 +160,27 @@ La gráfica de normalidad muestra evidencia bastante clara respecto a la no norm
 
 #### Frecuencia de genres
 ```{r}
-print(as.data.frame(table(movies$genres)), row.names = FALSE)
-# library(stringr)
-# genre = c('Action')
-# freq = c(1)
-# genres <- data.frame(genre, freq)
-# 
-# for (gen in movies$genres) {
-#   gens = str_split(gen, "\\|", simplify = TRUE)
-#   
-#   for (gn in gens) {
-#     if (str_length(gn) > 0) {
-#       vec = genres[genres$genre == gn,]
-#     
-#       if (nrow(vec) == 0) {
-#         genres[nrow(genres) + 1,] <- c(gn, 1)
-#       } else {
-#         genres[genres$genre == gn,] <- c(gn, as.numeric(vec$freq) + 1)
-#       }
-#     }
-#   }
-# }
-# print(genres, row.names = FALSE)
+library(stringr)
+genre = c('Action')
+freq = c(1)
+genres <- data.frame(genre, freq)
+
+for (gen in movies$genres) {
+  gens = str_split(gen, "\\|", simplify = TRUE)
+
+  for (gn in gens) {
+    if (str_length(gn) > 0) {
+      vec = genres[genres$genre == gn,]
+
+      if (nrow(vec) == 0) {
+        genres[nrow(genres) + 1,] <- c(gn, 1)
+      } else {
+        genres[genres$genre == gn,] <- c(gn, as.numeric(vec$freq) + 1)
+      }
+    }
+  }
+}
+print(genres, row.names = FALSE)
 ```
 
 #### Frecuencia de homePage
@@ -191,31 +190,30 @@ print(as.data.frame(table(movies$homePage)), row.names = FALSE)
 
 #### Frecuencia de productionCompany
 ```{r warning=FALSE, results='markup'}
-print(as.data.frame(table(movies$productionCompany)), row.names = FALSE)
-# library(stringi)
-# 
-# pCompany = c('20th Century Fox')
-# freq = c(1)
-# pCompanies <- data.frame(pCompany, freq)
-# 
-# for (pCompan in movies$productionCompany) {
-#   pCompans = str_split(pCompan, "\\|", simplify = TRUE)
-#   
-#   for (pc in pCompans) {
-#     pc1 = stri_enc_toutf8(pc, validate = TRUE)
-#     
-#     if (str_length(pc1) > 0) {
-#       vec = pCompanies[pCompanies$pCompany == pc1,]
-#     
-#       if (nrow(vec) == 0) {
-#         pCompanies[nrow(pCompanies) + 1,] <- c(pc1, 1)
-#       } else {
-#         pCompanies[pCompanies$pCompany == pc1,] <- c(pc1, as.numeric(vec$freq) + 1)
-#       }
-#     }
-#   }
-# }
-# print(pCompanies, row.names = FALSE)
+library(stringi)
+
+pCompany = c('20th Century Fox')
+freq = c(1)
+pCompanies <- data.frame(pCompany, freq)
+
+for (pCompan in movies$productionCompany) {
+  pCompans = str_split(pCompan, "\\|", simplify = TRUE)
+
+  for (pc in pCompans) {
+    pc1 = stri_enc_toutf8(pc, validate = TRUE)
+
+    if (str_length(pc1) > 0) {
+      vec = pCompanies[pCompanies$pCompany == pc1,]
+
+      if (nrow(vec) == 0) {
+        pCompanies[nrow(pCompanies) + 1,] <- c(pc1, 1)
+      } else {
+        pCompanies[pCompanies$pCompany == pc1,] <- c(pc1, as.numeric(vec$freq) + 1)
+      }
+    }
+  }
+}
+print(pCompanies, row.names = FALSE)
 ```
 
 #### Frecuencia de productionCompanyCountry
@@ -248,16 +246,6 @@ print(as.data.frame(table(movies$productionCompanyCountry)), row.names = FALSE)
 print(as.data.frame(table(movies$productionCountry)), row.names = FALSE)
 ```
 
-#### Frecuencia de productionCountry
-```{r}
-print(as.data.frame(table(movies$productionCountry)), row.names = FALSE)
-```
-
-#### Frecuencia de video
-```{r}
-print(as.data.frame(table(movies$video)), row.names = FALSE)
-```
-
 #### Frecuencia de director
 ```{r}
 print(as.data.frame(table(movies$director)), row.names = FALSE)
@@ -266,21 +254,6 @@ print(as.data.frame(table(movies$director)), row.names = FALSE)
 #### Frecuencia de actors
 ```{r}
 print(as.data.frame(table(movies$actors)), row.names = FALSE)
-```
-
-#### Frecuencia de actorsCharacter
-```{r}
-print(as.data.frame(table(movies$actorsCharacter)), row.names = FALSE)
-```
-
-#### Frecuencia de originalTitle
-```{r}
-print(as.data.frame(table(movies$originalTitle)), row.names = FALSE)
-```
-
-#### Frecuencia de title
-```{r}
-print(as.data.frame(table(movies$title)), row.names = FALSE)
 ```
 
 #### Frecuencia de originalLanguage
@@ -354,7 +327,7 @@ generos = as.numeric(genres$freq)
 names(generos) = genres$genre
 barplot(generos)
 ```
-El género principal de las 20 películas más recientes es drama.
+El género principal de las 20 películas más recientes es `r generos[which.max(generos$freq), 1]`.
 
 ```{r}
 genres <- data.frame(genre, freq)
@@ -376,7 +349,7 @@ generos = as.numeric(genres$freq)
 names(generos) = genres$genre
 barplot(generos)
 ```
-El género que predomina en el conjunto de datos es drama.
+El género que predomina en el conjunto de datos es `r generos[which.max(generos$freq), 1]`.
 
 #### 4.7 ¿Las películas de qué genero principal obtuvieron mayores ganancias?
 ```{r}
@@ -399,13 +372,16 @@ cor.test(as.numeric(format(movies$releaseDate, '%Y')), movies$actorsAmount, meth
 ```
 #### 4.9 ¿Es posible que la cantidad de hombres y mujeres en el reparto influya en la popularidad y en los ingresos de las películas?
 ```{r}
-plot(movies$castWomenAmount/movies$castMenAmount, movies$popularity)
+movies2 <- movies[movies$actorsAmount > 0,]
+movies2['MenPercentage'] <- movies2$castMenAmount / (movies2$castMenAmount + movies2$castWomenAmount)
+plot(movies2$MenPercentage, movies2$popularity)
 ```
-
+A partir de esta grafica podemos ver que no hay un aumento significativo en la popularidad relacionado a la cantidad de hombres en la película. Si vemos, la mayoría de películas, sin importar el porcentaje de hombres está en la misma franja de popularidad
 
 ```{r}
-plot(movies$castWomenAmount/movies$castMenAmount, movies$revenue)
+plot(movies2$MenPercentage, movies2$revenue)
 ```
+A partir de esta grafica podemos ver que sí hay un aumento, aunque no significativo, en el revenue relacionado a la cantidad de hombres en la película. Si vemos, las películas con mayor revenue en general fueron aquellas que están en la franja de entre 60% de hombres y 80% de hombres, sin embargo, la mayoría de mantiene dentro de la misma franja de revenue sin importar el porcentaje de hombres
 
 
 #### 4.10 ¿Quiénes son los directores que hicieron las 20 películas mejor calificadas? 
