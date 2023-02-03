@@ -11,7 +11,12 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 
 library(xtable)
+library(nortest)
+library(plyr)
+
 movies <- read.csv("movies.csv")
+movies$castWomenAmount <- as.numeric(movies$castWomenAmount)
+movies$castMenAmount <- as.numeric(movies$castMenAmount)
 ```
 
 ## Hoja de Trabajo 1: Análisis exploratorio
@@ -63,7 +68,225 @@ A continuación se presentan las variables, según su clasificación:
     * actorsPopularity
     * popularity
     * releaseDate
+    
+### Ejercicio 3
+#### Normalidad de runtime
+```{r}
+qqnorm(movies$runtime)
+qqline(movies$runtime)
+lillie.test(movies$runtime)
+```
+La gráfica de normalidad muestra evidencia respecto a la no normalidad de la distribución de la variable, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable runtime siga una distribución normal.
 
+#### Normalidad de voteAvg
+```{r}
+qqnorm(movies$voteAvg)
+qqline(movies$voteAvg)
+lillie.test(movies$voteAvg)
+```
+La gráfica de normalidad muestra evidencia respecto a la no normalidad de la distribución de la variable, pues los extremos se alejan demasiado de la línea de normalidad, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable voteAvg siga una distribución normal.
+
+#### Normalidad de voteCount
+```{r}
+qqnorm(movies$voteCount)
+qqline(movies$voteCount)
+lillie.test(movies$voteCount)
+```
+La gráfica de normalidad muestra evidencia bastante clara respecto a la no normalidad de la distribución de la variable, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable voteCount siga una distribución normal.
+
+#### Normalidad de genresAmount
+```{r}
+qqnorm(movies$genresAmount)
+qqline(movies$genresAmount)
+lillie.test(movies$genresAmount)
+```
+La gráfica de normalidad muestra evidencia bastante clara respecto a la no normalidad de la distribución de la variable, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable genresAmount siga una distribución normal.
+
+#### Normalidad de productionCoAmount
+```{r}
+qqnorm(movies$productionCoAmount)
+qqline(movies$productionCoAmount)
+lillie.test(movies$productionCoAmount)
+```
+La gráfica de normalidad muestra evidencia bastante clara respecto a la no normalidad de la distribución de la variable, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable productionCoAmount siga una distribución normal.
+
+#### Normalidad de productionCountriesAmount
+```{r}
+qqnorm(movies$productionCountriesAmount)
+qqline(movies$productionCountriesAmount)
+lillie.test(movies$productionCountriesAmount)
+```
+La gráfica de normalidad muestra evidencia bastante clara respecto a la no normalidad de la distribución de la variable, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable productionCountriesAmount siga una distribución normal.
+
+#### Normalidad de actorsAmount
+```{r}
+qqnorm(movies$actorsAmount)
+qqline(movies$actorsAmount)
+lillie.test(movies$actorsAmount)
+```
+Aunque podría parecer que la distribución de la variable es normal a primera vista, al analizar el comportamiento en el extremo derecho de la distribución se observa falta de normalidad, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable actorsAmount siga una distribución normal.
+
+#### Normalidad de castWomenAmount
+```{r}
+qqnorm(movies$castWomenAmount)
+qqline(movies$castWomenAmount)
+lillie.test(movies$castWomenAmount)
+```
+Aunque podría parecer que la distribución de la variable es normal a primera vista, al analizar el comportamiento en el extremo derecho de la distribución se observa falta de normalidad, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable castWomenAmount siga una distribución normal.
+
+#### Normalidad de castMenAmount
+```{r}
+qqnorm(movies$castMenAmount)
+qqline(movies$castMenAmount)
+lillie.test(movies$castMenAmount)
+```
+Aunque podría parecer que la distribución de la variable es normal a primera vista, al analizar el comportamiento en el extremo derecho de la distribución se observa falta de normalidad, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable castMenAmount siga una distribución normal.
+
+#### Normalidad de budget
+```{r}
+qqnorm(movies$budget)
+qqline(movies$budget)
+lillie.test(movies$budget)
+```
+La gráfica de normalidad muestra evidencia bastante clara respecto a la no normalidad de la distribución de la variable, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable budget siga una distribución normal.
+
+#### Normalidad de revenue
+```{r}
+qqnorm(movies$revenue)
+qqline(movies$revenue)
+lillie.test(movies$revenue)
+```
+La gráfica de normalidad muestra evidencia bastante clara respecto a la no normalidad de la distribución de la variable, esto se confirma en la prueba Lilliefors donde $ \text{valor-p} = 2.2 \times 10^{-16} \leq 0.1 $, por lo tanto, con un nivel de confianza de 99% se rechaza que la variable revenue siga una distribución normal.
+
+#### Frecuencia de genres
+```{r}
+print(as.data.frame(table(movies$genres)), row.names = FALSE)
+# library(stringr)
+# genre = c('Action')
+# freq = c(1)
+# genres <- data.frame(genre, freq)
+# 
+# for (gen in movies$genres) {
+#   gens = str_split(gen, "\\|", simplify = TRUE)
+#   
+#   for (gn in gens) {
+#     if (str_length(gn) > 0) {
+#       vec = genres[genres$genre == gn,]
+#     
+#       if (nrow(vec) == 0) {
+#         genres[nrow(genres) + 1,] <- c(gn, 1)
+#       } else {
+#         genres[genres$genre == gn,] <- c(gn, as.numeric(vec$freq) + 1)
+#       }
+#     }
+#   }
+# }
+# print(genres, row.names = FALSE)
+```
+
+#### Frecuencia de homePage
+```{r}
+print(as.data.frame(table(movies$homePage)), row.names = FALSE)
+```
+
+#### Frecuencia de productionCompany
+```{r warning=FALSE, results='markup'}
+print(as.data.frame(table(movies$productionCompany)), row.names = FALSE)
+# library(stringi)
+# 
+# pCompany = c('20th Century Fox')
+# freq = c(1)
+# pCompanies <- data.frame(pCompany, freq)
+# 
+# for (pCompan in movies$productionCompany) {
+#   pCompans = str_split(pCompan, "\\|", simplify = TRUE)
+#   
+#   for (pc in pCompans) {
+#     pc1 = stri_enc_toutf8(pc, validate = TRUE)
+#     
+#     if (str_length(pc1) > 0) {
+#       vec = pCompanies[pCompanies$pCompany == pc1,]
+#     
+#       if (nrow(vec) == 0) {
+#         pCompanies[nrow(pCompanies) + 1,] <- c(pc1, 1)
+#       } else {
+#         pCompanies[pCompanies$pCompany == pc1,] <- c(pc1, as.numeric(vec$freq) + 1)
+#       }
+#     }
+#   }
+# }
+# print(pCompanies, row.names = FALSE)
+```
+
+#### Frecuencia de productionCompanyCountry
+```{r}
+# country = c('US')
+# freq = c(1)
+# pCountries <- data.frame(country, freq)
+# 
+# for (countr in movies$productionCompanyCountry) {
+#   countrs = str_split(countr, "\\|", simplify = TRUE)
+#   
+#   for (pcc in countrs) {
+#     if (str_length(pcc) > 0 && !is.na(pcc)) {
+#       vec = pCountries[pCountries$country == pcc,]
+#     
+#       if (nrow(vec) == 0) {
+#         pCountries[nrow(pCountries) + 1,] <- c(pcc, 1)
+#       } else {
+#         pCountries[pCountries$country == pcc,] <- c(pcc, as.numeric(vec$freq) + 1)
+#       }
+#     }
+#   }
+# }
+# print(pCountries, row.names = FALSE)
+print(as.data.frame(table(movies$productionCompanyCountry)), row.names = FALSE)
+```
+
+#### Frecuencia de productionCountry
+```{r}
+print(as.data.frame(table(movies$productionCountry)), row.names = FALSE)
+```
+
+#### Frecuencia de productionCountry
+```{r}
+print(as.data.frame(table(movies$productionCountry)), row.names = FALSE)
+```
+
+#### Frecuencia de video
+```{r}
+print(as.data.frame(table(movies$video)), row.names = FALSE)
+```
+
+#### Frecuencia de director
+```{r}
+print(as.data.frame(table(movies$director)), row.names = FALSE)
+```
+
+#### Frecuencia de actors
+```{r}
+print(as.data.frame(table(movies$actors)), row.names = FALSE)
+```
+
+#### Frecuencia de actorsCharacter
+```{r}
+print(as.data.frame(table(movies$actorsCharacter)), row.names = FALSE)
+```
+
+#### Frecuencia de originalTitle
+```{r}
+print(as.data.frame(table(movies$originalTitle)), row.names = FALSE)
+```
+
+#### Frecuencia de title
+```{r}
+print(as.data.frame(table(movies$title)), row.names = FALSE)
+```
+
+#### Frecuencia de originalLanguage
+```{r}
+print(as.data.frame(table(movies$originalLanguage)), row.names = FALSE)
+```
 
 ### Ejercicio 4
 
@@ -94,6 +317,94 @@ moreVotes[1:10,15]
 ```{r}
 lessVote <- movies[order(movies$voteAvg,decreasing = FALSE), ]
 lessVote[1,15]
+```
+
+#### 4.5 ¿Cuántas películas se hicieron por año? ¿En qué año se hicieron más películas?
+
+```{r}
+movies$releaseDate <- as.Date(movies$releaseDate)
+movieYears <- as.data.frame(table(as.numeric(format(movies$releaseDate, '%Y'))))
+years <- movieYears$Freq
+names(years) <- movieYears$Var1
+barplot(years)
+```
+El año con más películas realizadas fue el 2021
+
+#### 4.6 ¿Cuál es el género principal de las 20 películas más recientes? ¿Cuál es el género principal que predomina en el conjunto de datos? Represéntelo usando un gráfico
+```{r}
+recientes <- movies[order(movies$releaseDate), 'genres']
+library(stringr)
+genre = c('Action')
+freq = c(1)
+genres <- data.frame(genre, freq)
+
+for (gen in recientes[1:21]) {
+  gens = str_split(gen, "\\|", simplify = TRUE)
+
+  vec = genres[genres$genre == gens[1:1],]
+
+  if (nrow(vec) == 0) {
+    genres[nrow(genres) + 1,] <- c(gens[1:1], 1)
+  } else {
+    genres[genres$genre == gens[1:1],] <- c(gens[1:1], as.numeric(vec$freq) + 1)
+  }
+}
+
+generos = as.numeric(genres$freq)
+names(generos) = genres$genre
+barplot(generos)
+```
+El género principal de las 20 películas más recientes es drama.
+
+```{r}
+genres <- data.frame(genre, freq)
+
+for (i in 1:length(movies$genres)) {
+  gens = str_split(movies$genres[i:i], "\\|", simplify = TRUE)
+
+  vec = genres[genres$genre == gens[1:1],]
+  movies$genres[i:i] <- gens[1:1]
+
+  if (nrow(vec) == 0) {
+    genres[nrow(genres) + 1,] <- c(gens[1:1], 1)
+  } else {
+    genres[genres$genre == gens[1:1],] <- c(gens[1:1], as.numeric(vec$freq) + 1)
+  }
+}
+
+generos = as.numeric(genres$freq)
+names(generos) = genres$genre
+barplot(generos)
+```
+El género que predomina en el conjunto de datos es drama.
+
+#### 4.7 ¿Las películas de qué genero principal obtuvieron mayores ganancias?
+```{r}
+movies['profit'] <- movies$revenue - movies$budget
+gananciasPromedio <- aggregate(movies[, 'profit'], list(movies$genres), mean)
+```
+El género principal que obtuvo mayores ganancias es `r `gananciasPromedio[which.max(gananciasPromedio$x), 1]`
+
+#### 4.8 ¿La cantidad de actores influye en los ingresos de las películas? ¿Se han hecho películas con más actores en los últimos años?
+```{r}
+plot(movies$actorsAmount, movies$revenue)
+cor(movies$actorsAmount, movies$revenue, method = 'pearson')
+```
+
+En la gráfica se puede observar la falta de relación directa entre la cantidad de actores y el ingreso producido, esto se confirma con el coeficiente de correlación de Pearson (-0.019), indicando una correlación directa prácticamente nula entre las dos variables. Por lo tanto la cantidad de actores no influye en los ingresos de las películas.
+
+```{r}
+plot(as.numeric(format(movies$releaseDate, '%Y')), movies$actorsAmount)
+cor.test(as.numeric(format(movies$releaseDate, '%Y')), movies$actorsAmount, method = 'spearman')
+```
+#### 4.9 ¿Es posible que la cantidad de hombres y mujeres en el reparto influya en la popularidad y en los ingresos de las películas?
+```{r}
+plot(movies$castWomenAmount/movies$castMenAmount, movies$popularity)
+```
+
+
+```{r}
+plot(movies$castWomenAmount/movies$castMenAmount, movies$revenue)
 ```
 
 
